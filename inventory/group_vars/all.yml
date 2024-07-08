@@ -1,0 +1,27 @@
+---
+# Network Configuration
+default_domain: lab.example.com
+ntp_servers:
+  - 0.pool.ntp.org
+  - 1.pool.ntp.org
+
+# OpenShift Configuration
+openshift_version: "4.10"
+cluster_name: ocp-cluster
+
+# Common Software Packages
+common_packages:
+  - vim
+  - wget
+  - git
+
+# Firewall Default Policies
+firewall_default_policy: DROP
+
+# DHCP Configuration
+dhcp_lease_time: "12h"
+
+# DNS Configuration
+dns_forwarders:
+  - 8.8.8.8
+  - 8.8.4.4

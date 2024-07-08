@@ -1,0 +1,18 @@
+- name: Install Chrony
+  ansible.builtin.yum:
+    name: chrony
+    state: present
+
+- name: Configure Chrony as an NTP server
+  ansible.builtin.template:
+    src: chrony.conf.j2
+    dest: /etc/chrony.conf
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Enable and start Chrony service
+  ansible.builtin.service:
+    name: chronyd
+    state: started
+    enabled: true

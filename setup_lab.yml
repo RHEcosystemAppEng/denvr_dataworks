@@ -1,0 +1,37 @@
+---
+- name: Setup OpenShift Lab Infrastructure
+  hosts: infrastructure
+  become: true
+
+  pre_tasks:
+    - name: Include global variables
+      include_vars: group_vars/all.yml
+
+  roles:
+    - { role: initial_setup, tags: ['init'] }
+    - { role: dns, tags: ['network', 'dns'] }
+    - { role: resolv, tags: ['network', 'dns'] }
+    - { role: dhcp, tags: ['network', 'dhcp'] }
+    - { role: ntp, tags: ['time'] }
+    - { role: firewall, tags: ['security'] }
+    - { role: network_config, tags: ['network'] }
+    - { role: hosts_updater, tags: ['network', 'hosts'] }
+
+- name: Configure Servers
+  hosts: servers
+  become: true
+
+  roles:
+    - { role: common, tags: ['common'] }
+    # Add more server-specific roles as needed
+
+- name: Verify Setup
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Check connectivity
+      ping:
+      tags: ['verify']
+
+    # Add more verification tasks as needed
